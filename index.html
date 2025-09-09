@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<title>URL 파라미터 복사</title>
+		<script>
+			window.onload = function () {
+				const params = new URLSearchParams(window.location.search);
+				const target = params.get('target');
+				const msg = document.getElementById('msg');
+				if (target) {
+					navigator.clipboard
+						.writeText(target)
+						.then(() => {
+							msg.textContent = '복사 완료! 창이 곧 닫힙니다.';
+							setTimeout(() => {
+								window.close();
+							}, 1000);
+						})
+						.catch(() => {
+							msg.textContent = '클립보드 복사에 실패했습니다. 창이 곧 닫힙니다.';
+							setTimeout(() => {
+								window.close();
+							}, 1000);
+						});
+				} else {
+					msg.textContent = 'target 파라미터가 없습니다. 창이 곧 닫힙니다.';
+					setTimeout(() => {
+						window.close();
+					}, 1000);
+				}
+			};
+		</script>
+	</head>
+	<body>
+		<p id="msg">복사 중...</p>
+	</body>
+</html>
